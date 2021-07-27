@@ -1,0 +1,25 @@
+* {
+  box-sizing:border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height:100%;
+  width:100%;
+}
+
+body {
+
+  align-content:space-around;
+  justify-content:center;
+  background-color: grey;
+  color:#ffffff;
+  display:grid;
+
+}
+
+canvas {
+  background-color:#ffffff;
+  // color: rgb(187, 129, 76);
+}
