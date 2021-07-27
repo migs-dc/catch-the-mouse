@@ -5,12 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const height = 500;
   const catHeight = 40;
   const catWidth = 60;
-  const tableHeight = 200;
+  const tableHeight = 150;
   const tableWidth = 300;
-  const shelfHeight = 350;
+  const shelfHeight = 300;
   const shelfWidth = 200;
 
-  const floorHeight = 20;
+  const floorHeight = 10;
   let minY = floorHeight;
   
   context.canvas.width = width;
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let cat = {
     height: catHeight,
     width: catWidth,
-    x: 375,
+    x: 150,
     y: height - floorHeight - catHeight,
     xVelocity: 0,
     yVelocity: 0,
@@ -31,14 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
     height: shelfHeight,
     width: shelfWidth,
     x: 300,
-    y: height - shelfHeight
+    y: height - floorHeight - shelfHeight
   }
   
   let table = {
     height: tableHeight,
     width: tableWidth,
     x: 400,
-    y: height - tableHeight
+    y: height - floorHeight - tableHeight
   }
   
   let catMove = {
@@ -76,50 +76,19 @@ document.addEventListener('DOMContentLoaded', () => {
       cat.jumping = true;
     }
 
-    if (catMove.left && cat.x > 0) {
+    if (catMove.left) {
       cat.xVelocity -= 2;
-    } else if (catMove.right && cat.x < width - cat.width) {
+    } else if (catMove.right) {
       cat.xVelocity += 2;
     }
 
     cat.x += cat.xVelocity;
-    cat.xVelocity *= 0.8; // friction
+    cat.xVelocity *= 0.75; // friction
     
     cat.yVelocity += 2; 
     cat.y += cat.yVelocity;
 
-    if(catMove.drop){
-      console.log("in")
-      minY = floorHeight;
-    }
-
-    // can't pass through the floor/platform when jumping
-    if (cat.y >= height - minY - catHeight){
-      cat.yVelocity = 0;
-      cat.jumping = false;
-      cat.y = height - minY - cat.height;
-    }
-
-    // land on table
-    if(cat.y <= table.y - cat.height){
-      if (cat.x + cat.width > table.x && cat.x < table.x + table.width){    
-        // console.log(cat.y, table.height)
-        minY = table.height;
-      } else {
-        minY = floorHeight;
-      }
-    }
-
-    if(cat.y <= shelf.y - cat.height){
-      if (cat.x + cat.width > shelf.x && cat.x < shelf.x + shelf.width){    
-        console.log(cat.y, shelf.height)
-        minY = shelf.height;
-      } else {
-        minY = floorHeight;
-      }
-    }
-
-    // can't go passed the left and right borders
+    // // can't go passed the left and right borders
     // if (cat.x <= 0){
     //   catMove.left = false;
     //   cat.xVelocity = 0;
@@ -134,9 +103,37 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (cat.x > width) {
       cat.x = -cat.width;
     }
+
+    if(catMove.drop){
+      minY = floorHeight;
+    }
+
+    // can't pass through the floor/platform when jumping
+    if (cat.y >= height - minY - catHeight){
+      cat.yVelocity = 0;
+      cat.jumping = false;
+      cat.y = height - minY - cat.height;
+    }
+
+    if(cat.y <= table.y - cat.height){ // land on table
+      if (cat.x + cat.width > table.x && cat.x < table.x + table.width){    
+        // console.log(cat.y, table.height)
+        minY = table.height + floorHeight;
+      } else {
+        minY = floorHeight;
+      }
+    }
+
+    if(cat.y <= shelf.y - cat.height){ // land on shelf
+      if (cat.x + cat.width > shelf.x && cat.x < shelf.x + shelf.width){    
+        minY = shelf.height + floorHeight;
+      } else {
+        minY = floorHeight;
+      }
+    }
     
-    context.fillStyle = "#202020"; // canvas
-    context.fillRect(0, 0, 750, 500);// x, y, width, height
+    context.fillStyle = "#87cefa"; // canvas
+    context.fillRect(0, 0, width, height);// x, y, width, height
 
     context.fillStyle = "#1B0000"; // shelf
     context.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
@@ -148,11 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
     context.fillRect(cat.x, cat.y, cat.width, cat.height);
     
     context.fillStyle = "#654321"; // floor
-    context.fillRect(0, 480, width, floorHeight);
+    context.fillRect(0, height-floorHeight, width, floorHeight);
 
     window.requestAnimationFrame(game);
   }
-
 
   window.addEventListener("keydown", keyListener);
   window.addEventListener("keyup", keyListener);
