@@ -1,32 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
   let context = document.getElementById("canvas").getContext("2d");
-
+  
   const width = 750;
   const height = 500;
   const catHeight = 40;
   const catWidth = 60;
+  const mouseHeight = 15;
+  const mouseWidth = 25;
+  
   const tableHeight = 150;
   const tableWidth = 300;
   const shelfHeight = 300;
   const shelfWidth = 200;
-
+  
   const floorHeight = 10;
   let minY = floorHeight;
   
   context.canvas.width = width;
   context.canvas.height = height;
-
-  let cat = {
-    height: catHeight,
-    width: catWidth,
-    x: 150,
-    y: height - floorHeight - catHeight,
-    xVelocity: 0,
-    yVelocity: 0,
-    jumping: false,
-    onPlatform: false
-  }
-
+  
   let shelf = {
     height: shelfHeight,
     width: shelfWidth,
@@ -41,11 +33,29 @@ document.addEventListener('DOMContentLoaded', () => {
     y: height - floorHeight - tableHeight
   }
   
+  let cat = {
+    height: catHeight,
+    width: catWidth,
+    x: 150,
+    y: height - floorHeight - catHeight,
+    xVelocity: 0,
+    yVelocity: 0,
+    jumping: false,
+    onPlatform: false
+  }
+  
   let catMove = {
     left: false,
     right: false,
     jump: false,
     drop: false
+  }
+
+  let mouse = {
+    height: mouseHeight,
+    width: mouseWidth,
+    x: 550,
+    y: height - floorHeight - mouseHeight
   }
 
   function keyListener(e) {
@@ -56,14 +66,28 @@ document.addEventListener('DOMContentLoaded', () => {
       case 37: 
         catMove.left = moving;
         break;
+      case 65: 
+        catMove.left = moving;
+        break;
+      
       case 39:
+        catMove.right = moving;
+        break;
+      case 68:
         catMove.right = moving;
         break;
 
       case 38:
         catMove.jump = moving;
         break;
+      case 87:
+        catMove.jump = moving;
+        break;
+
       case 40:
+        catMove.drop = moving;
+        break;
+      case 83:
         catMove.drop = moving;
         break;
     }
@@ -116,8 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if(cat.y <= table.y - cat.height){ // land on table
-      if (cat.x + cat.width > table.x && cat.x < table.x + table.width){    
-        // console.log(cat.y, table.height)
+      if (cat.x + cat.width > table.x && cat.x < table.x + table.width){ 
         minY = table.height + floorHeight;
       } else {
         minY = floorHeight;
@@ -131,6 +154,10 @@ document.addEventListener('DOMContentLoaded', () => {
         minY = floorHeight;
       }
     }
+
+    //catch the mouse
+    
+
     
     context.fillStyle = "#87cefa"; // canvas
     context.fillRect(0, 0, width, height);// x, y, width, height
@@ -140,6 +167,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     context.fillStyle = "#331800"; // table
     context.fillRect(table.x, table.y, table.width, table.height);
+
+    context.fillStyle = "#A16AE8"; // cat
+    context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
     
     context.fillStyle = "#BB814C"; // cat
     context.fillRect(cat.x, cat.y, cat.width, cat.height);
