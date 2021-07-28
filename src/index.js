@@ -169,14 +169,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function detechCat(){
     let x = mouse.x - cat.x;
-    let range = 200;
+    let xRange = 200;
+    let yRange = 150;
 
-    if(x <= range && x >= 0){
-      mouse.left = false;
-      mouse.right = true;
-    } else if (x >= -range && x < 0){
-      mouse.left = true;
-      mouse.right = false;
+    if (cat.y >= mouse.y-yRange && cat.y <= mouse.y+yRange) {
+      if(x <= xRange && x >= 0){
+        mouse.left = false;
+        mouse.right = true;
+      } else if (x >= -xRange && x < 0){
+        mouse.left = true;
+        mouse.right = false;
+      }
     }
   }
 
@@ -187,9 +190,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setMinY(mouse);
   }
 
+  function catchMouse(){
+    // if(cat.x )
+  }
+
   function game() {
     moveCat();
     moveMouse();
+    catchMouse();
 
     //catch the mouse
     
