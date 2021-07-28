@@ -71,7 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function keyListener(e) {
     let moving;
-    (e.type === "keydown") ? moving = true : moving = false;
+    if(e.type === "keydown"){
+      moving = true
+    } else if(e.type === "keyup"){
+      moving = false;
+    } 
 
     switch(e.keyCode){
       case 37: 
@@ -163,7 +167,21 @@ document.addEventListener('DOMContentLoaded', () => {
     setMinY(cat);
   }
 
+  function detechCat(){
+    let x = mouse.x - cat.x;
+    let range = 200;
+
+    if(x <= range && x >= 0){
+      mouse.left = false;
+      mouse.right = true;
+    } else if (x >= -range && x < 0){
+      mouse.left = true;
+      mouse.right = false;
+    }
+  }
+
   function moveMouse(){
+    detechCat();
     animalMove(mouse);
     offScreen(mouse);
     setMinY(mouse);
