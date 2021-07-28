@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const shelfWidth = 200;
   
   const floorHeight = 10;
-  let minY = floorHeight;
   
   context.canvas.width = width;
   context.canvas.height = height;
@@ -41,10 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     xVelocity: 0,
     yVelocity: 0,
     jumping: false,
-    onPlatform: false
-  }
-  
-  let catMove = {
+    minY: floorHeight,
+
     left: false,
     right: false,
     jump: false,
@@ -57,16 +54,20 @@ document.addEventListener('DOMContentLoaded', () => {
     x: 550,
     y: height - floorHeight - mouseHeight,
     xVelocity: 0,
-    yVelocity: 0
+    yVelocity: 0,
+    minY: floorHeight,
+
+    left: false,
+    right: false,
+    jump: false,
+    drop: false
   }
 
-  function offScreen(animal) {    
-    if (animal.x < -animal.width) {
-      animal.x = width;
-    } else if (animal.x > width) {
-      animal.x = -animal.width;
-    }
-  }
+  // initial direction for mouse
+  Math.random() > 0.5 ? mouse.left = true : mouse.right = true;
+
+  const animals = [cat, mouse];
+  const platforms = [table, shelf];
 
   function keyListener(e) {
     let moving;
@@ -74,98 +75,103 @@ document.addEventListener('DOMContentLoaded', () => {
 
     switch(e.keyCode){
       case 37: 
-        catMove.left = moving;
+        cat.left = moving;
         break;
       case 65: 
-        catMove.left = moving;
+        cat.left = moving;
         break;
       
       case 39:
-        catMove.right = moving;
+        cat.right = moving;
         break;
       case 68:
-        catMove.right = moving;
+        cat.right = moving;
         break;
 
       case 38:
-        catMove.jump = moving;
+        cat.jump = moving;
         break;
       case 87:
-        catMove.jump = moving;
+        cat.jump = moving;
         break;
 
       case 40:
-        catMove.drop = moving;
+        cat.drop = moving;
         break;
       case 83:
-        catMove.drop = moving;
+        cat.drop = moving;
         break;
     }
   }
 
-  function game() {
-    if (catMove.jump && !cat.jumping) {
-      cat.yVelocity -= Math.abs(cat.xVelocity);
-      cat.yVelocity -= 22;
-      cat.jumping = true;
+  function offScreen(animal) { // pass through sides
+    if (animal.x < -animal.width) {
+      animal.x = width;
+    } else if (animal.x > width) {
+      animal.x = -animal.width;
     }
+  }
 
-    if (catMove.left) {
-      cat.xVelocity -= 2;
-    } else if (catMove.right) {
-      cat.xVelocity += 2;
-    }
-
-    cat.x += cat.xVelocity;
-    cat.xVelocity *= 0.75; // friction
-
-    cat.yVelocity += 2; 
-    cat.y += cat.yVelocity;
-
-    // // can't go passed the left and right borders
-    // if (cat.x <= 0){
-    //   catMove.left = false;
-    //   cat.xVelocity = 0;
-    // } else if (cat.x >= width - cat.width){
-    //   catMove.right = false;
-    //   cat.xVelocity = 0;
-    // }
-
-    // pass through sides
-    offScreen(cat);
-
-    if(catMove.drop){
-      minY = floorHeight;
-    }
-
+  function setMinY(animal){
     // can't pass through the floor/platform when jumping
-    if (cat.y >= height - minY - catHeight){
-      cat.yVelocity = 0;
-      cat.jumping = false;
-      cat.y = height - minY - cat.height;
+    if (animal.y >= height - animal.minY - animal.height){
+      animal.yVelocity = 0;
+      animal.jumping = false;
+      animal.y = height - animal.minY - animal.height;
     }
 
-    if(cat.y <= table.y - cat.height){ // land on table
-      if (cat.x + cat.width > table.x && cat.x < table.x + table.width){ 
-        minY = table.height + floorHeight;
+    platforms.forEach(platform => platforming(animal, platform));
+  }
+
+  function platforming(animal, platform){
+    if(animal.y <= platform.y - animal.height){ // land on platform
+      if (animal.x + animal.width > platform.x && animal.x < platform.x + platform.width){    
+        animal.minY = platform.height + floorHeight;
       } else {
-        minY = floorHeight;
+        animal.minY = floorHeight;
       }
     }
+  }
 
-    if(cat.y <= shelf.y - cat.height){ // land on shelf
-      if (cat.x + cat.width > shelf.x && cat.x < shelf.x + shelf.width){    
-        minY = shelf.height + floorHeight;
-      } else {
-        minY = floorHeight;
-      }
+  function animalMove(animal){
+    if (animal.jump && !animal.jumping) {
+      animal.yVelocity -= Math.abs(animal.xVelocity);
+      animal.yVelocity -= 22;
+      animal.jumping = true;
     }
 
-    mouse.xVelocity *= 0.75;
-    mouse.xVelocity += 2.5;
-    mouse.x += mouse.xVelocity;
+    if (animal.left) { // move left or right
+      animal.xVelocity -= 2;
+    } else if (animal.right) {
+      animal.xVelocity += 2;
+    }
+    
+    animal.x += animal.xVelocity;
+    animal.xVelocity *= 0.75; // friction
+    
+    animal.yVelocity += 2; // gravity
+    animal.y += animal.yVelocity;
 
+    if(animal.drop){
+      animal.minY = floorHeight;
+    }
+  }
+
+  function moveCat(){    
+    animalMove(cat);
+    offScreen(cat);
+    setMinY(cat);
+  }
+
+  function moveMouse(){
+    animalMove(mouse);
     offScreen(mouse);
+    setMinY(mouse);
+  }
+
+  function game() {
+    moveCat();
+    moveMouse();
 
     //catch the mouse
     
