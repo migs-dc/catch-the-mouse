@@ -203,17 +203,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (inX && inY){
-      console.log("catch")
-      window.alert("Congrats! You caught the mouse!");
+      return true;
     }
+    return false;
   }
 
   function game() {
     moveCat();
     moveMouse();
-    catchMouse();
-
-    //catch the mouse
+    // mouse.jump = true;
     
     context.fillStyle = "#87cefa"; // canvas
     context.fillRect(0, 0, width, height);// x, y, width, height
@@ -233,9 +231,16 @@ document.addEventListener('DOMContentLoaded', () => {
     context.fillStyle = "#654321"; // floor
     context.fillRect(0, height-floorHeight, width, floorHeight);
 
+    
+    if(catchMouse()){
+      console.log("catch")      
+      let messageBox = document.getElementById("message")
+      messageBox.append(" CONGRATS, you caught the mouse!")      
+      return
+    }
+
     window.requestAnimationFrame(game);
   }
-
   window.addEventListener("keydown", keyListener);
   window.addEventListener("keyup", keyListener);
   window.requestAnimationFrame(game);
