@@ -55,7 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
     height: mouseHeight,
     width: mouseWidth,
     x: 550,
-    y: height - floorHeight - mouseHeight
+    y: height - floorHeight - mouseHeight,
+    xVelocity: 0,
+    yVelocity: 0
+  }
+
+  function offScreen(animal) {    
+    if (animal.x < -animal.width) {
+      animal.x = width;
+    } else if (animal.x > width) {
+      animal.x = -animal.width;
+    }
   }
 
   function keyListener(e) {
@@ -108,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cat.x += cat.xVelocity;
     cat.xVelocity *= 0.75; // friction
-    
+
     cat.yVelocity += 2; 
     cat.y += cat.yVelocity;
 
@@ -122,11 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // }
 
     // pass through sides
-    if (cat.x < -cat.width) {
-      cat.x = width;
-    } else if (cat.x > width) {
-      cat.x = -cat.width;
-    }
+    offScreen(cat);
 
     if(catMove.drop){
       minY = floorHeight;
@@ -155,9 +161,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    //catch the mouse
-    
+    mouse.xVelocity *= 0.75;
+    mouse.xVelocity += 2.5;
+    mouse.x += mouse.xVelocity;
 
+    offScreen(mouse);
+
+    //catch the mouse
     
     context.fillStyle = "#87cefa"; // canvas
     context.fillRect(0, 0, width, height);// x, y, width, height
@@ -168,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     context.fillStyle = "#331800"; // table
     context.fillRect(table.x, table.y, table.width, table.height);
 
-    context.fillStyle = "#A16AE8"; // cat
+    context.fillStyle = "#A16AE8"; // mouse
     context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
     
     context.fillStyle = "#BB814C"; // cat
