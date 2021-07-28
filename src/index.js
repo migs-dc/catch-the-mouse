@@ -191,7 +191,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function catchMouse(){
-    // if(cat.x )
+    let inX = false;
+    let inY = false;
+    if( (cat.x >= mouse.x && cat.x <= mouse.x + mouse.width) ||
+    (cat.x + cat.width >= mouse.x && cat.x + cat.width <= mouse.x + mouse.width)){
+      inX = true;
+    }
+    if( (cat.y >= mouse.y && cat.y <= mouse.y + mouse.height) ||
+    (cat.y + cat.height >= mouse.y && cat.y + cat.height <= mouse.y + mouse.height)){
+      inY = true;
+    }
+
+    if (inX && inY){
+      console.log("catch")
+      window.alert("Congrats! You caught the mouse!");
+    }
   }
 
   function game() {
