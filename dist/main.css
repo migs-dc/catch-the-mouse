@@ -29,13 +29,6 @@ canvas {
   position: relative;
 }
 
-.images #table {
-  height: 150px;
-  width: 300px;
-}
-.images #cat {
-  border: 1px solid red;
-  padding: 0;
-  height: 40px;
-  width: 60px;
+.images {
+  display: none;
 }

@@ -1,17 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
   let context = document.getElementById("canvas").getContext("2d");
   let tableImage = document.getElementById("table");
-  let catImage = document.getElementById("cat");
+  let catRightImage = document.getElementById("cat-right");
+  let catLeftImage = document.getElementById("cat-left");
+  let mouseRightImage = document.getElementById("mouse-right");
+  let mouseLeftImage = document.getElementById("mouse-left");
+  let roomImage = document.getElementById("room");
 
   const width = 1500;
   const height = 700;
-  const catHeight = 40;
-  const catWidth = 60;
-  const mouseHeight = 15;
-  const mouseWidth = 25;
+  const catHeight = 60;
+  const catWidth = 80;
+  const mouseHeight = 25;
+  const mouseWidth = 45;
   
   const tableHeight = 150;
-  const tableWidth = 425;
+  const tableWidth = 300;
   const shelfHeight = 300;
   const shelfWidth = 200;
   const dresserHeight = 200;
@@ -245,9 +249,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (x === "ahead"){
       mouse.right = !mouse.right;
       mouse.left = !mouse.left;
-      mouse.speed = 2.5;
+      mouse.speed = 1.9;
     } else if (x === "behind"){
-      mouse.speed = 2.5;
+      mouse.speed = 1.9;
     } else if (x === "none"){
       mouse.speed = 1.75;
       return;
@@ -298,32 +302,49 @@ document.addEventListener('DOMContentLoaded', () => {
     moveCat();
     moveMouse();
     // mouse.jump = true;
-    
-    context.fillStyle = "#87cefa"; // canvas
-    context.fillRect(0, 0, width, height);// x, y, width, height
 
-    context.fillStyle = "#1B0000"; // shelf
-    context.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
+    context.drawImage(room, 0, 0, width, height)
     
-    // context.fillStyle = "#331800"; // table
-    // context.fillRect(table.x, table.y, table.width, table.height);
-    context.drawImage(tableImage, table.x, table.y);
-    
-    context.fillStyle = "#331800"; // dresser
-    context.fillRect(dresser.x, dresser.y, dresser.width, dresser.height);
+    // context.fillStyle = "#87cefa"; // canvas
+    // context.fillRect(0, 0, width, height);// x, y, width, height
 
-    context.fillStyle = "#8B4513"; // bed
-    context.fillRect(bed.x, bed.y, bed.width, bed.height);
+    // context.fillStyle = "#1B0000"; // shelf
+    // context.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
     
-    context.fillStyle = "#654321"; // floor
-    context.fillRect(floor.x, floor.y, floor.width, floor.height);
+    // // context.fillStyle = "#331800"; // table
+    // // context.fillRect(table.x, table.y, table.width, table.height);
+    // context.drawImage(tableImage, table.x, table.y, table.width, table.height);
+    
+    // context.fillStyle = "#331800"; // dresser
+    // context.fillRect(dresser.x, dresser.y, dresser.width, dresser.height);
 
-    context.fillStyle = "#A16AE8"; // mouse
-    context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
+    // context.fillStyle = "#8B4513"; // bed
+    // context.fillRect(bed.x, bed.y, bed.width, bed.height);
     
+    // context.fillStyle = "#654321"; // floor
+    // context.fillRect(floor.x, floor.y, floor.width, floor.height);
+
     // context.fillStyle = "#BB814C"; // cat
     // context.fillRect(cat.x, cat.y, cat.width, cat.height);
-    context.drawImage(catImage, cat.x, cat.y);
+
+    // context.fillStyle = "#A16AE8"; // mouse
+    // context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
+    
+    if (cat.right) { 
+      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height)
+    } else if (cat.left) {
+      context.drawImage(catLeftImage, cat.x, cat.y, cat.width, cat.height)
+    } else if (!cat.left && !cat.right) {
+      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height)
+    }
+
+    if (mouse.right) { 
+      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width, mouse.height)
+    } else if (mouse.left) {
+      context.drawImage(mouseLeftImage, mouse.x, mouse.y, mouse.width, mouse.height)
+    } else if (!mouse.left && !mouse.right) {
+      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width, mouse.height)
+    }
     
     if(catchMouse()){
       console.log("catch")      
