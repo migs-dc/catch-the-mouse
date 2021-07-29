@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const width = 1500;
   const height = 700;
-  const catHeight = 60;
-  const catWidth = 80;
+  const catHeight = 75;
+  const catWidth = 100;
   const mouseHeight = 25;
   const mouseWidth = 45;
   
@@ -331,19 +331,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
     
     if (cat.right) { 
-      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height)
+      context.drawImage(catRightImage, cat.x, cat.y, cat.width+5, cat.height+5)
     } else if (cat.left) {
-      context.drawImage(catLeftImage, cat.x, cat.y, cat.width, cat.height)
+      context.drawImage(catLeftImage, cat.x, cat.y, cat.width+5, cat.height+5)
     } else if (!cat.left && !cat.right) {
-      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height)
+      context.drawImage(catRightImage, cat.x, cat.y, cat.width+5, cat.height+5)
     }
 
     if (mouse.right) { 
-      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width, mouse.height)
+      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width+5, mouse.height+5)
     } else if (mouse.left) {
-      context.drawImage(mouseLeftImage, mouse.x, mouse.y, mouse.width, mouse.height)
+      context.drawImage(mouseLeftImage, mouse.x, mouse.y, mouse.width+5, mouse.height+5)
     } else if (!mouse.left && !mouse.right) {
-      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width, mouse.height)
+      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width+5, mouse.height+5)
     }
     
     if(catchMouse()){
