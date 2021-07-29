@@ -249,9 +249,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (x === "ahead"){
       mouse.right = !mouse.right;
       mouse.left = !mouse.left;
-      mouse.speed = 1.9;
+      mouse.speed = 2;
     } else if (x === "behind"){
-      mouse.speed = 1.9;
+      mouse.speed = 2;
     } else if (x === "none"){
       mouse.speed = 1.75;
       return;
@@ -331,19 +331,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
     
     if (cat.right) { 
-      context.drawImage(catRightImage, cat.x, cat.y, cat.width+5, cat.height+5)
+      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height)
     } else if (cat.left) {
-      context.drawImage(catLeftImage, cat.x, cat.y, cat.width+5, cat.height+5)
+      context.drawImage(catLeftImage, cat.x, cat.y, cat.width, cat.height)
     } else if (!cat.left && !cat.right) {
-      context.drawImage(catRightImage, cat.x, cat.y, cat.width+5, cat.height+5)
+      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height)
     }
 
     if (mouse.right) { 
-      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width+5, mouse.height+5)
+      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width, mouse.height)
     } else if (mouse.left) {
-      context.drawImage(mouseLeftImage, mouse.x, mouse.y, mouse.width+5, mouse.height+5)
+      context.drawImage(mouseLeftImage, mouse.x, mouse.y, mouse.width, mouse.height)
     } else if (!mouse.left && !mouse.right) {
-      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width+5, mouse.height+5)
+      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width, mouse.height)
     }
     
     if(catchMouse()){
