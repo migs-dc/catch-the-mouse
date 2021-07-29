@@ -14,8 +14,8 @@ you simply browse the room and interact with animated objects that will give des
 * The cat and the platforms will be represented as rectangles at first
 
 ### 2. Mouse (1 day)
-* A toy mouse controlled by a simple ai
-* The toy mouse randomly selects which paths take when running around the room
+* A toy mouse controlled by a algorithm
+* The toy mouse randomly selects which paths to avoid the cat when running around the room
  
 ### 3. Assets (1 day)
 * Incorporating drawings/pictures into the game

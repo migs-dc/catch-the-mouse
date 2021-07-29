@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   let context = document.getElementById("canvas").getContext("2d");
   
-  const width = 750;
-  const height = 500;
+  const width = 1500;
+  const height = 700;
   const catHeight = 40;
   const catWidth = 60;
   const mouseHeight = 15;
@@ -12,11 +12,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const tableWidth = 300;
   const shelfHeight = 300;
   const shelfWidth = 200;
-  
+  const dresserHeight = 200;
+  const dresserWidth = 300;
+  const bedHeight = 100;
+  const bedWidth = 400;
+
   const floorHeight = 10;
   
   context.canvas.width = width;
   context.canvas.height = height;
+
+  let floor = {
+    height: floorHeight,
+    width: width,
+    x: 0,
+    y: height - floorHeight
+  }
   
   let shelf = {
     height: shelfHeight,
@@ -28,8 +39,22 @@ document.addEventListener('DOMContentLoaded', () => {
   let table = {
     height: tableHeight,
     width: tableWidth,
-    x: 400,
+    x: 40,
     y: height - floorHeight - tableHeight
+  }
+
+  let dresser = {
+    height: dresserHeight,
+    width: dresserWidth,
+    x: 700,
+    y: height - floorHeight - dresserHeight
+  }
+
+  let bed = {
+    height: bedHeight,
+    width: bedWidth,
+    x: 1050,
+    y: height - floorHeight - bedHeight
   }
   
   let cat = {
@@ -41,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     yVelocity: 0,
     jumping: false,
     minY: floorHeight,
+    speed: 2,
 
     left: false,
     right: false,
@@ -56,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     xVelocity: 0,
     yVelocity: 0,
     minY: floorHeight,
+    speed: 1.75,
 
     left: false,
     right: false,
@@ -67,9 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
   Math.random() > 0.5 ? mouse.left = true : mouse.right = true;
 
   const animals = [cat, mouse];
-  const platforms = [table, shelf];
+  const platforms = [floor, bed, table, shelf, dresser];
+  const furniture = [bed, table, shelf, dresser];
 
-  function keyListener(e) {
+  function keyListener(e){
     let moving;
     if(e.type === "keydown"){
       moving = true
@@ -123,17 +151,19 @@ document.addEventListener('DOMContentLoaded', () => {
       animal.jumping = false;
       animal.y = height - animal.minY - animal.height;
     }
-
     platforms.forEach(platform => platforming(animal, platform));
   }
 
   function platforming(animal, platform){
+    // console.log(platform);
     if(animal.y <= platform.y - animal.height){ // land on platform
       if (animal.x + animal.width > platform.x && animal.x < platform.x + platform.width){    
         animal.minY = platform.height + floorHeight;
-      } else {
-        animal.minY = floorHeight;
-      }
+
+        if (platform.height === floorHeight){
+          animal.minY = floorHeight;
+        }
+      } 
     }
   }
 
@@ -145,9 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (animal.left) { // move left or right
-      animal.xVelocity -= 2;
+      animal.xVelocity -= animal.speed;
     } else if (animal.right) {
-      animal.xVelocity += 2;
+      animal.xVelocity += animal.speed;
     }
     
     animal.x += animal.xVelocity;
@@ -163,31 +193,85 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function moveCat(){    
     animalMove(cat);
-    offScreen(cat);
     setMinY(cat);
+    offScreen(cat);
   }
 
-  function detechCat(){
-    let x = mouse.x - cat.x;
-    let xRange = 200;
+  function detect(target){
+    let x = mouse.x - target.x;
+    let xRange = 250;
     let yRange = 150;
 
-    if (cat.y >= mouse.y-yRange && cat.y <= mouse.y+yRange) {
-      if(x <= xRange && x >= 0){
-        mouse.left = false;
-        mouse.right = true;
-      } else if (x >= -xRange && x < 0){
-        mouse.left = true;
-        mouse.right = false;
+    let res = [];
+
+    if (target.y >= mouse.y-yRange && target.y <= mouse.y+yRange) { //check if target is within yRange
+      if (mouse.left){ // mouse going left
+        if(x <= xRange && x >= 0){ //left check
+          res.push("ahead");
+        } else if (x >= -xRange + xRange*.5 && x < 0){ //right check
+          res.push("behind");
+        } else {
+          res.push("none");
+        }
+      } else if (mouse.right){ // mouse going right
+        if(x <= xRange - xRange*.5 && x >= 0){ //left check
+          res.push("behind");
+        } else if (x >= -xRange && x < 0){ //right check
+          res.push("ahead");
+        } else {
+          res.push("none");
+        }
       }
+
+      // check if target is above or below the mouse      
+      if (target.y + target.height === mouse.y + mouse.height) {        
+        res.push("same")
+      } else if (target.y + target.height < mouse.y){ // bottom of target is above mouse
+        res.push("above")
+      } else if (target.y > mouse.y + target.height){ // buttom of mouse if above the garget
+        res.push("below")
+      }
+    }
+    return res;
+  }
+
+  function mousePath(){
+    let [x, y] = detect(cat);
+    mouse.drop = false;
+    mouse.jump = false;
+
+    if (x === "ahead"){
+      mouse.right = !mouse.right;
+      mouse.left = !mouse.left;
+      mouse.speed = 2.5;
+    } else if (x === "behind"){
+      mouse.speed = 2.5;
+    } else if (x === "none"){
+      mouse.speed = 1.75;
+      return;
+    }
+
+
+    if (y === "above"){
+      mouse.drop = true; 
+    } else if (y === "below"){
+      mouse.jump = true;
+    } else if (y === "same" || mouse.minY === floorHeight){
+      if(Math.random() > 0.5) { mouse.jump = true }
+    } else {
+      (Math.random() > 0.5) ? mouse.jump = true : mouse.drop = true;
     }
   }
 
+  function mouseJump(){
+
+  }
+
   function moveMouse(){
-    detechCat();
+    mousePath();
     animalMove(mouse);
-    offScreen(mouse);
     setMinY(mouse);
+    offScreen(mouse);
   }
 
   function catchMouse(){
@@ -222,15 +306,20 @@ document.addEventListener('DOMContentLoaded', () => {
     context.fillStyle = "#331800"; // table
     context.fillRect(table.x, table.y, table.width, table.height);
 
+    context.fillStyle = "#331800"; // dresser
+    context.fillRect(dresser.x, dresser.y, dresser.width, dresser.height);
+
+    context.fillStyle = "#8B4513"; // bed
+    context.fillRect(bed.x, bed.y, bed.width, bed.height);
+    
+    context.fillStyle = "#654321"; // floor
+    context.fillRect(floor.x, floor.y, floor.width, floor.height);
+
     context.fillStyle = "#A16AE8"; // mouse
     context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
     
     context.fillStyle = "#BB814C"; // cat
     context.fillRect(cat.x, cat.y, cat.width, cat.height);
-    
-    context.fillStyle = "#654321"; // floor
-    context.fillRect(0, height-floorHeight, width, floorHeight);
-
     
     if(catchMouse()){
       console.log("catch")      
