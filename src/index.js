@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   let context = document.getElementById("canvas").getContext("2d");
-  
+  let tableImage = document.getElementById("table");
+  let catImage = document.getElementById("cat");
+
   const width = 1500;
   const height = 700;
   const catHeight = 40;
@@ -9,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mouseWidth = 25;
   
   const tableHeight = 150;
-  const tableWidth = 300;
+  const tableWidth = 425;
   const shelfHeight = 300;
   const shelfWidth = 200;
   const dresserHeight = 200;
@@ -303,9 +305,10 @@ document.addEventListener('DOMContentLoaded', () => {
     context.fillStyle = "#1B0000"; // shelf
     context.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
     
-    context.fillStyle = "#331800"; // table
-    context.fillRect(table.x, table.y, table.width, table.height);
-
+    // context.fillStyle = "#331800"; // table
+    // context.fillRect(table.x, table.y, table.width, table.height);
+    context.drawImage(tableImage, table.x, table.y);
+    
     context.fillStyle = "#331800"; // dresser
     context.fillRect(dresser.x, dresser.y, dresser.width, dresser.height);
 
@@ -318,8 +321,9 @@ document.addEventListener('DOMContentLoaded', () => {
     context.fillStyle = "#A16AE8"; // mouse
     context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
     
-    context.fillStyle = "#BB814C"; // cat
-    context.fillRect(cat.x, cat.y, cat.width, cat.height);
+    // context.fillStyle = "#BB814C"; // cat
+    // context.fillRect(cat.x, cat.y, cat.width, cat.height);
+    context.drawImage(catImage, cat.x, cat.y);
     
     if(catchMouse()){
       console.log("catch")      

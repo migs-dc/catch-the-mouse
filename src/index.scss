@@ -27,3 +27,19 @@ canvas {
 #message {
   position: relative;
 }
+
+.images {
+  // display: none;
+
+  #table {
+    height: 150px;
+    width: 300px;
+  }
+
+  #cat {
+    border: 1px solid red;
+    padding: 0;
+    height: 40px;
+    width: 60px;
+  }
+}
