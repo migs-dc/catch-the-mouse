@@ -1,11 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
   let context = document.getElementById("canvas").getContext("2d");
-  let tableImage = document.getElementById("table");
-  let catRightImage = document.getElementById("cat-right");
-  let catLeftImage = document.getElementById("cat-left");
   let mouseRightImage = document.getElementById("mouse-right");
   let mouseLeftImage = document.getElementById("mouse-left");
-  // let roomImage = document.getElementById("room"); // juse use room
+  let roomImage = document.getElementById("room"); // juse use room
+
+  const catFrame1 = document.getElementById("1");
+  const catFrame2 = document.getElementById("2");
+  const catFrame3 = document.getElementById("3");
+  const catFrame4 = document.getElementById("4");
+
+  const catFrame1r = document.getElementById("r1");
+  const catFrame2r = document.getElementById("r2");
+  const catFrame3r = document.getElementById("r3");
+  const catFrame4r = document.getElementById("r4");
+
+  const leftCatFrames = [catFrame1, catFrame2, catFrame3, catFrame4];
+  const rightCatFrames = [catFrame1r, catFrame2r, catFrame3r, catFrame4r];
 
   let catFacingRight = true; // is the cat facing right
 
@@ -304,12 +314,19 @@ document.addEventListener('DOMContentLoaded', () => {
     return false;
   }
 
+  let frameCount = 0;
+  const delayFrames = 10;
+
+  function animate(frames, object){
+    let pos = Math.floor(frameCount/delayFrames) % 4;
+    context.drawImage(frames[pos], object.x, object.y, object.width, object.height);
+    frameCount++;
+  }
+
   function game() {
     moveCat();
     moveMouse();
-    // mouse.jump = true;
-
-    context.drawImage(room, 0, 0, width, height)
+    context.drawImage(roomImage, 0, 0, width, height);
     
     // context.fillStyle = "#87cefa"; // canvas
     // context.fillRect(0, 0, width, height);// x, y, width, height
@@ -336,21 +353,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // context.fillStyle = "#A16AE8"; // mouse
     // context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
 
-    // cat can't move in reverse but disappears when left and right are both pressed
-    // if (catFacingRight && !cat.left) {
-    //   context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height);
-    // } else if (!catFacingRight && !cat.right) {
-    //   context.drawImage(catLeftImage, cat.x, cat.y, cat.width, cat.height);
-    // }
-    
     if (cat.right) {
-      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height);
+      animate(rightCatFrames, cat);
     } else if (cat.left) {
-      context.drawImage(catLeftImage, cat.x, cat.y, cat.width, cat.height);
-    } else if (catFacingRight) {
-      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height);
+      animate(leftCatFrames, cat);
+    } else if (!cat.right && !cat.left && catFacingRight){
+      context.drawImage(catFrame1r, cat.x, cat.y, cat.width, cat.height);
     } else {
-      context.drawImage(catLeftImage, cat.x, cat.y, cat.width, cat.height);
+      context.drawImage(catFrame1, cat.x, cat.y, cat.width, cat.height);
     }
 
     if (mouse.right) { 
