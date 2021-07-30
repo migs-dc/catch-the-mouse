@@ -5,7 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let catLeftImage = document.getElementById("cat-left");
   let mouseRightImage = document.getElementById("mouse-right");
   let mouseLeftImage = document.getElementById("mouse-left");
-  let roomImage = document.getElementById("room");
+  // let roomImage = document.getElementById("room"); // juse use room
+
+  let catFacingRight = true; // is the cat facing right
 
   const width = 1500;
   const height = 700;
@@ -114,16 +116,20 @@ document.addEventListener('DOMContentLoaded', () => {
     switch(e.keyCode){
       case 37: 
         cat.left = moving;
+        catFacingRight = false;
         break;
       case 65: 
         cat.left = moving;
+        catFacingRight = false;
         break;
       
       case 39:
         cat.right = moving;
+        catFacingRight = true;
         break;
       case 68:
         cat.right = moving;
+        catFacingRight = true;
         break;
 
       case 38:
@@ -329,13 +335,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // context.fillStyle = "#A16AE8"; // mouse
     // context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
+
+    // cat can't move in reverse but disappears when left and right are both pressed
+    // if (catFacingRight && !cat.left) {
+    //   context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height);
+    // } else if (!catFacingRight && !cat.right) {
+    //   context.drawImage(catLeftImage, cat.x, cat.y, cat.width, cat.height);
+    // }
     
-    if (cat.right) { 
-      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height)
+    if (cat.right) {
+      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height);
     } else if (cat.left) {
-      context.drawImage(catLeftImage, cat.x, cat.y, cat.width, cat.height)
-    } else if (!cat.left && !cat.right) {
-      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height)
+      context.drawImage(catLeftImage, cat.x, cat.y, cat.width, cat.height);
+    } else if (catFacingRight) {
+      context.drawImage(catRightImage, cat.x, cat.y, cat.width, cat.height);
+    } else {
+      context.drawImage(catLeftImage, cat.x, cat.y, cat.width, cat.height);
     }
 
     if (mouse.right) { 
@@ -355,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.requestAnimationFrame(game);
   }
+
   window.addEventListener("keydown", keyListener);
   window.addEventListener("keyup", keyListener);
   window.requestAnimationFrame(game);
