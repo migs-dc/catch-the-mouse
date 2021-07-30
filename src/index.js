@@ -265,9 +265,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (x === "ahead"){
       mouse.right = !mouse.right;
       mouse.left = !mouse.left;
-      mouse.speed = 2;
+      mouse.speed = 1.85;
     } else if (x === "behind"){
-      mouse.speed = 2;
+      mouse.speed = 1.85;
     } else if (x === "none"){
       mouse.speed = 1.75;
       return;
