@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let catFacingRight = true; // is the cat facing right
 
-  const width = 1200;
+  const width = 1500;
   const height = 700;
   const catHeight = 75;
   const catWidth = 100;
