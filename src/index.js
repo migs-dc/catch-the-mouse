@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const width = 1500;
   const height = 700;
   const catHeight = 75;
-  const catWidth = 70;
+  const catWidth = 50;
   const mouseHeight = 25;
   const mouseWidth = 45;
   
