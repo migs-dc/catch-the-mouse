@@ -34,3 +34,21 @@ canvas {
 .images {
   display: none;
 }
+
+.footer {
+  border: 1px solid lightblue;
+  border-radius: 3px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+a {
+  text-decoration: none; 
+  color: white;
+}
+
+.fab {
+  font-size: 20px;
+}
