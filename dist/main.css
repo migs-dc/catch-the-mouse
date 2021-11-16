@@ -37,16 +37,21 @@ canvas {
 
 .footer {
   border: 1px solid lightblue;
+  
   border-radius: 3px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  background: rgb(188, 215, 224);
+  color: black;
 }
 
 a {
   text-decoration: none; 
-  color: white;
+  /* color: white; */
+  color: black;
 }
 
 .fab {
