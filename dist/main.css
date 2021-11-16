@@ -46,6 +46,8 @@ canvas {
 
   background: rgb(188, 215, 224);
   color: black;
+  padding: 0 10px;
+  margin: 0;
 }
 
 a {
