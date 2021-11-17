@@ -61,5 +61,10 @@ a {
 }
 
 .title {
-  
+  border-bottom: 1px solid lightblue;
+  border-top: 1px solid lightblue;
+}
+
+.title h1 {
+  font-size: 50px;
 }
