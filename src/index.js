@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const width = 1500;
   const height = 700;
   const catHeight = 75;
-  const catWidth = 50; // 100
+  const catWidth = 100; // 100
   const mouseHeight = 25;
-  const mouseWidth = 25; //45
+  const mouseWidth = 45; //45
   
   const tableHeight = 150;
   const tableWidth = 300;
@@ -358,9 +358,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (cat.left) {
       animate(leftCatFrames, cat);
     } else if (!cat.right && !cat.left && catFacingRight){
-      context.drawImage(catFrame1r, cat.x, cat.y, cat.width, cat.height);
+      context.drawImage(catFrame1r, cat.x, cat.y+5, cat.width, cat.height);
     } else {
-      context.drawImage(catFrame1, cat.x, cat.y, cat.width, cat.height);
+      context.drawImage(catFrame1, cat.x, cat.y+5, cat.width, cat.height);
     }
 
     if (mouse.right) { 
