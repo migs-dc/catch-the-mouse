@@ -358,9 +358,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (cat.left) {
       animate(leftCatFrames, cat);
     } else if (!cat.right && !cat.left && catFacingRight){
-      context.drawImage(catFrame1r, cat.x, cat.y+5, cat.width, cat.height);
+      context.drawImage(catFrame1r, cat.x, cat.y+7, cat.width, cat.height);
     } else {
-      context.drawImage(catFrame1, cat.x, cat.y+5, cat.width, cat.height);
+      context.drawImage(catFrame1, cat.x, cat.y+7, cat.width, cat.height);
     }
 
     if (mouse.right) { 
