@@ -34,3 +34,14 @@ canvas {
 .images {
   display: none;
 }
+
+.footer {
+  background-color: lightblue;
+  color: black;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  border-radius: 3px;
+}
