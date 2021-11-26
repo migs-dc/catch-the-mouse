@@ -364,11 +364,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (mouse.right) { 
-      context.drawImage(mouseRightImage, mouse.x, mouse.y+2, mouse.width, mouse.height)
+      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width, mouse.height)
     } else if (mouse.left) {
-      context.drawImage(mouseLeftImage, mouse.x, mouse.y+2, mouse.width, mouse.height)
+      context.drawImage(mouseLeftImage, mouse.x, mouse.y, mouse.width, mouse.height)
     } else if (!mouse.left && !mouse.right) {
-      context.drawImage(mouseRightImage, mouse.x, mouse.y+2, mouse.width, mouse.height)
+      context.drawImage(mouseRightImage, mouse.x, mouse.y, mouse.width, mouse.height)
     }
     
     if(catchMouse()){
