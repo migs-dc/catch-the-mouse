@@ -45,3 +45,7 @@ canvas {
   
   border-radius: 3px;
 }
+
+.footer a {
+  color: black;
+}
