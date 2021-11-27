@@ -48,4 +48,14 @@ canvas {
 
 .footer a {
   color: black;
+  outline: none;
+}
+
+.name {
+  display: flex;
+}
+
+.pfp {
+  background: red;
+  border-radius: solid white 3px;
 }
