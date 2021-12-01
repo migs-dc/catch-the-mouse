@@ -36,11 +36,10 @@ canvas {
 }
 
 .footer {
-  font-weight: bold;
-
+  
   background-color: lightblue;
   color: black;
-
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,6 +50,7 @@ canvas {
 .footer a {
   color: black;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .name {
