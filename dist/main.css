@@ -40,9 +40,10 @@ canvas {
   border-radius: 3px;
   margin-top: 50px;
   padding: 0;
-
-  color: lightblue;
   font-size: 36px;
+
+  color: black;
+  background-color: white;
 }
 
 .footer {
