@@ -36,6 +36,11 @@ canvas {
 }
 
 .title {
+  border: solid 1px lightblue;
+  border-radius: 3px;
+  margin-top: 50px;
+  padding: 0;
+
   color: lightblue;
   font-size: 36px;
 }
