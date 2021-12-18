@@ -58,6 +58,10 @@ canvas {
   height: 75px;
 }
 
+.bot {
+  display: flex;
+}
+
 .footer {
   
   background-color: white;
@@ -120,4 +124,8 @@ canvas {
 
 .fa-angellist {
  color: #481ff9;
+}
+
+.controls {
+  
 }
