@@ -138,5 +138,8 @@ canvas {
   border: solid 1px white;
   border-radius: 3px;
 
+  color: black;
+  background: white;
+
   margin-left: 10px;
 }
