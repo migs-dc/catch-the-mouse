@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     yVelocity: 0,
     jumping: false,
     minY: floorHeight,
-    speed: 1,
+    speed: 2,
 
     left: false,
     right: false,
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     xVelocity: 0,
     yVelocity: 0,
     minY: floorHeight,
-    speed: 0.75,
+    speed: 1.75,
 
     left: false,
     right: false,
