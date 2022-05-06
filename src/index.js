@@ -328,30 +328,30 @@ document.addEventListener('DOMContentLoaded', () => {
     moveMouse();
     context.drawImage(roomImage, 0, 0, width, height);
     
-    context.fillStyle = "#87cefa"; // canvas
-    context.fillRect(0, 0, width, height);// x, y, width, height
+    // context.fillStyle = "#87cefa"; // canvas
+    // context.fillRect(0, 0, width, height);// x, y, width, height
 
-    context.fillStyle = "#1B0000"; // shelf
-    context.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
+    // context.fillStyle = "#1B0000"; // shelf
+    // context.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
     
-    // context.fillStyle = "#331800"; // table
-    // context.fillRect(table.x, table.y, table.width, table.height);
-    context.drawImage(tableImage, table.x, table.y, table.width, table.height);
+    // // context.fillStyle = "#331800"; // table
+    // // context.fillRect(table.x, table.y, table.width, table.height);
+    // context.drawImage(tableImage, table.x, table.y, table.width, table.height);
     
-    context.fillStyle = "#331800"; // dresser
-    context.fillRect(dresser.x, dresser.y, dresser.width, dresser.height);
+    // context.fillStyle = "#331800"; // dresser
+    // context.fillRect(dresser.x, dresser.y, dresser.width, dresser.height);
 
-    context.fillStyle = "#8B4513"; // bed
-    context.fillRect(bed.x, bed.y, bed.width, bed.height);
+    // context.fillStyle = "#8B4513"; // bed
+    // context.fillRect(bed.x, bed.y, bed.width, bed.height);
     
-    context.fillStyle = "#654321"; // floor
-    context.fillRect(floor.x, floor.y, floor.width, floor.height);
+    // context.fillStyle = "#654321"; // floor
+    // context.fillRect(floor.x, floor.y, floor.width, floor.height);
 
-    context.fillStyle = "#BB814C"; // cat
-    context.fillRect(cat.x, cat.y, cat.width, cat.height);
+    // context.fillStyle = "#BB814C"; // cat
+    // context.fillRect(cat.x, cat.y, cat.width, cat.height);
 
-    context.fillStyle = "#A16AE8"; // mouse
-    context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
+    // context.fillStyle = "#A16AE8"; // mouse
+    // context.fillRect(mouse.x, mouse.y, mouse.width, mouse.height);
 
     if (cat.right) {
       animate(rightCatFrames, cat);
